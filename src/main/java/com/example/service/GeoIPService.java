@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
  * Service that resolves IP addresses to countries using the MaxMind GeoLite2 database.
  * This service works offline once the database file is downloaded.
  */
-public class GeoIPService {
+public class GeoIPService implements AutoCloseable {
     private static final String UNKNOWN_COUNTRY = "Unknown";
     private final DatabaseReader reader;
     private boolean isInitialized = false;
