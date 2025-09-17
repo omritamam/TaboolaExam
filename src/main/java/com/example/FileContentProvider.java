@@ -43,3 +43,4 @@ public class FileContentProvider implements IContentProvider {
         return lines;
     }
 }
+
