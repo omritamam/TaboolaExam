@@ -7,7 +7,6 @@ import com.example.service.GeoIPService;
 import com.example.service.GeoIPServiceFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Responsible for running the log analysis application.
@@ -23,40 +22,21 @@ public class ApplicationRunner {
      */
     public static void runApplication(String logFilePath, String geoLiteDbPath) {
         // Initialize content provider
-        IContentProvider contentProvider = createContentProvider(logFilePath);
+        IContentProvider contentProvider = new FileContentProvider(logFilePath);
 
-        // Initialize and use GeoIPService with try-with-resources for automatic closing
-        try (GeoIPService geoIPService = GeoIPServiceFactory.createGeoIPService(geoLiteDbPath)) {
+        var metricCalculators = new ArrayList<IMetricCalculator>(){};
 
-            // Create metric calculators and log examiner
-            List<IMetricCalculator> calculators = createMetricCalculators(geoIPService);
-            LogExaminer logExaminer = new LogExaminer(calculators, contentProvider);
+        // Country metric calculator
+        GeoIPService geoIPService = GeoIPServiceFactory.createGeoIPService(geoLiteDbPath);
+        metricCalculators.add(new CountryMetricCalculator(geoIPService));
 
-            // Process the log file and print results
-            logExaminer.printResults();
-        } // GeoIPService is automatically closed here
-    }
+        // TODO: Add other metric metricCalculators when implemented
 
-    /**
-     * Creates the content provider for reading log files
-     *
-     * @param logFilePath Path to the log file
-     * @return Initialized content provider
-     */
-    private static IContentProvider createContentProvider(String logFilePath) {
-        return new FileContentProvider(logFilePath);
-    }
+        // Process log file and compute statistics
+        LogExaminerManager logExaminerManager = new LogExaminerManager(metricCalculators, contentProvider);
+        logExaminerManager.printResults();
 
-    /**
-     * Creates the list of metric calculators used for log analysis
-     *
-     * @param geoIPService The GeoIP service to be used by calculators
-     * @return List of initialized metric calculators
-     */
-    private static List<IMetricCalculator> createMetricCalculators(GeoIPService geoIPService) {
-        List<IMetricCalculator> calculators = new ArrayList<>();
-        calculators.add(new CountryMetricCalculator(geoIPService));
-        // TODO: Add other metric calculators when implemented
-        return calculators;
+        // Dispose metricCalculators (which will handle disposing the GeoIPService)
+        logExaminerManager.disposeCalculators();
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Manager class that processes log data using injected metric calculators.
  */
-public class LogExaminer {
+public class LogExaminerManager {
     private final List<IMetricCalculator> metricCalculators;
     private final IContentProvider contentProvider;
 
@@ -20,7 +20,7 @@ public class LogExaminer {
      * @param metricCalculators List of metric calculators to process the log data
      * @param contentProvider Content provider to read log data
      */
-    public LogExaminer(List<IMetricCalculator> metricCalculators, IContentProvider contentProvider) {
+    public LogExaminerManager(List<IMetricCalculator> metricCalculators, IContentProvider contentProvider) {
         this.metricCalculators = metricCalculators;
         this.contentProvider = contentProvider;
     }
@@ -58,5 +58,13 @@ public class LogExaminer {
             System.out.println(); // Add empty line between metrics
         }
     }
-}
 
+    /**
+     * Disposes all metric calculators to release resources.
+     */
+    public void disposeCalculators() {
+        for (IMetricCalculator calculator : metricCalculators) {
+            calculator.dispose();
+        }
+    }
+}

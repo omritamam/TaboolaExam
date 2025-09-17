@@ -20,4 +20,12 @@ public interface IMetricCalculator {
      * @return MetricData with the computed statistics
      */
     MetricData computeStats();
+
+    /**
+     * Dispose method to clean up resources.
+     * Default implementation does nothing.
+     */
+    default void dispose() {
+        // Default implementation does nothing
+    }
 }

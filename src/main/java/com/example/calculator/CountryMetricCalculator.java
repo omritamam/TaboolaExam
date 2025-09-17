@@ -62,6 +62,13 @@ public class CountryMetricCalculator implements IMetricCalculator {
         return new MetricData("Countries", countryDistribution, processedLines, LocalDateTime.now());
     }
 
+    @Override
+    public void dispose() {
+        if (geoIPService != null) {
+            geoIPService.close();
+        }
+    }
+
     /**
      * Extracts the IP address from a log line.
      *
