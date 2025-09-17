@@ -1,0 +1,52 @@
+R&D Engineer Test
+Instructions
+The purpose of this test is to evaluate your technical abilities in various aspects of Software
+Engineering, Optimizations, Concurrency Issues and Architecture. The test should simulate a
+real task in a real working environment.
+You can use any resource at your disposal (use the open web). You will be asked to explain
+your solution, emphasizing on correctness, design and coding decisions.
+We are looking for code that is:
+● Working
+● Readable
+● Tested (please submit unit testing)
+● Well designed (Object Oriented)
+● Simple code
+The code should be in any language you feel comfortable with (Java is preferred, but definitely
+not required) and include unit testing.
+- Confidential -
+Questions
+The attached file “apache.log” - this is a real apache log file..
+The goal is to process this file and output some analytics about the users of the web server.
+Specifically, please print the following properties:
+1. The list of countries of the site’s visitors, along with the % of users from each country.
+2. The operating system distribution.
+3. The browser distribution.
+Requirements:
+● The code must be well designed and extensible, for example: if we want to
+extract another property from the log, it should be added easily.
+● Precision should be 2 digits after the decimal point.
+● The printed list should be sorted in a descending order.
+Tips:
+● You can (and should) use google and 3rd party libraries.
+● Address this exercise like a real task in you day to day job
+● Code standards:
+○ Object oriented - Hint: Think what would you have to add/change in
+order to add an additional metric, or a different usage for the metrics
+(beside the distributions). Ensure these changes can be done easily
+while keeping your design.
+Example output:
+Countries:
+US - 64.12%
+Germany - 19.01%
+Brazil - 12.5%
+Israel - 5.00%
+Operating systems:
+Windows - 75.01%
+Android - 13.99%
+iOS - 11.01%
+Browsers:
+Firefox - 43.12%
+Chrome - 32.34%
+IE - 24.11%
+Safari - 1.09%
+- Confidential -
